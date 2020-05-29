@@ -1,40 +1,31 @@
- --[[
-Thank you for Using Brogl Admin!
-COMMANDS:
-!respawn
-!test
-!dex
-!rs
-!btools
-!ws [NUMBER]
-!jp [NUMBER]
-!fly WIP line 41 fo script
---]]
+local noclip = true
+local fly = true
+local function FindPlayer(name)
+name = name:lower()
+for k,v in pairs(game:GetService("Players"):GetPlayers()) do
+if v.Name:lower():sub(1,#name) == name then
+return v
+end
+end
+end
 
-
---LOCALS FOR COMMAND TOGGLES
-	local noclip = true
-	local fly = true
-	
-	
-	
-	
-	
-	
-	
-	
-	-----------------------------------------------------------------------------------------------------
-local Plr = game:GetService("Players").LocalPlayer
-		Plr.Chatted:Connect(function(Msg)
-   		 if Msg:sub(1, 8) == "!respawn" and Plr.Character then       
-		 Plr.Character:BreakJoints() 	
-elseif Msg:sub(1, 5) == "!test" then
-		print("Quantum Admin works!")		
-			elseif Msg:sub(1,4) == "!dex" then
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/PinkDex/DarkDexYes/master/DarkDarkDex.txt"))()
-elseif Msg:sub(1, 3) == "!rs"	 then
-				spawn(loadstring(game:HttpGet'https://pastebin.com/raw/pYKcSQEp'))
-elseif Msg:sub(1, 7) == "!btools" then
+game.Players.LocalPlayer.Chatted:Connect(function(Msg)
+if Msg:sub(1,8) == "!respawn" and plr.Character then
+plr.Character:BreakJoints()
+elseif Msg:sub(1,5) == "!test" then
+local msg = Instance.new("Message",game.CoreGui)
+msg.Name = game.JobId
+msg.Text = "Admin commands working"
+wait(2)
+msg:Destroy()
+elseif Msg:sub(1,4) == "!dex" then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/PinkDex/DarkDexYes/master/DarkDarkDex.txt"))()
+elseif Msg:sub(1, 3) == "!rs" then
+spawn(loadstring(game:HttpGet'https://pastebin.com/raw/pYKcSQEp'))
+elseif Msg:sub(1,6) == "!goto " then
+local target = FindPlayer(Msg:sub(7))
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame
+elseif Msg:sub(1,7) == "!btools" then
 a = Instance.new("HopperBin")
 a.BinType = 1
 a.Parent = game:GetService("Players")().LocalPlayer.Backpack
@@ -44,26 +35,19 @@ a.Parent = game:GetService("Players")().LocalPlayer.Backpack
 a = Instance.new("HopperBin")
 a.BinType = 3
 a.Parent = game:GetService("Players")().LocalPlayer.Backpack
-elseif Msg:sub(1, 4) == "!ws " then	
-	game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = Msg:sub(5, 10)
-
-elseif Msg:sub(1, 4) == "!jp " then
-	game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = Msg:sub(5, 10)
-elseif Msg:sub(1, 4) == "!fly" then
-if fly then
--- FLY SCRIPT BUT I SUCK SO MUCH I CANT MAKE ONE
+elseif Msg:sub(1,4) == "!ws " then
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Msg:sub(5,10)
+elseif Msg:sub(1,4) == "!jp " then
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = Msg:sub(5,10)
+elseif Msg:sub(1,7) == "!noclip" then
+if noclip then
+game:GetService("RunService").Stepped:connect(function()
+game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end)
 end
-elseif Msg:sub(1, 7) == "!noclip" then
-
-	if noclip then
-		game:GetService('RunService').Stepped:connect(function()
-			game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
-		end)
-	end
-	elseif Msg:sub(1, 5) == "!clip" then
-		
-	noclip = false
-	end
+elseif Msg:sub(1,5) == "!clip" then
+noclip = false
+end
 end)
 
 
